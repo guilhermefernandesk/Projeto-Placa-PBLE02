@@ -1,0 +1,431 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"14 i2c.c
+[; ;i2c.c: 14: void i2cInit(void) {
+[v _i2cInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _i2cInit ]
+[f ]
+"15
+[; ;i2c.c: 15:  ((((*(volatile __near unsigned char*)0xF93)) |= (1<<(0))));
+[e =| *U -> -> 3987 `i `*VNuc -> << -> 1 `i -> 0 `i `uc ]
+"16
+[; ;i2c.c: 16:  ((((*(volatile __near unsigned char*)0xF93)) |= (1<<(1))));
+[e =| *U -> -> 3987 `i `*VNuc -> << -> 1 `i -> 1 `i `uc ]
+"17
+[; ;i2c.c: 17: }
+[e :UE 1 ]
+}
+"21
+[; ;i2c.c: 21: void I2C_delay(void) {
+[v _I2C_delay `(v ~T0 @X0 1 ef ]
+{
+[e :U _I2C_delay ]
+[f ]
+"22
+[; ;i2c.c: 22:  volatile int v;
+[v _v `Vi ~T0 @X0 1 a ]
+"23
+[; ;i2c.c: 23:  int i;
+[v _i `i ~T0 @X0 1 a ]
+"24
+[; ;i2c.c: 24: }
+[e :UE 2 ]
+}
+"26
+[; ;i2c.c: 26: unsigned char read_SCL(void)
+[v _read_SCL `(uc ~T0 @X0 1 ef ]
+"27
+[; ;i2c.c: 27: {
+{
+[e :U _read_SCL ]
+[f ]
+"28
+[; ;i2c.c: 28:  ((((*(volatile __near unsigned char*)0xF93)) |= (1<<(1))));
+[e =| *U -> -> 3987 `i `*VNuc -> << -> 1 `i -> 1 `i `uc ]
+"29
+[; ;i2c.c: 29:  return !!((((*(volatile __near unsigned char*)0xF81)) & (1<<(1))));
+[e ) -> -> ! ! != & -> *U -> -> 3969 `i `*VNuc `i << -> 1 `i -> 1 `i -> 0 `i `i `uc ]
+[e $UE 3  ]
+"30
+[; ;i2c.c: 30: }
+[e :UE 3 ]
+}
+"31
+[; ;i2c.c: 31: unsigned char read_SDA(void)
+[v _read_SDA `(uc ~T0 @X0 1 ef ]
+"32
+[; ;i2c.c: 32: {
+{
+[e :U _read_SDA ]
+[f ]
+"33
+[; ;i2c.c: 33:  ((((*(volatile __near unsigned char*)0xF93)) |= (1<<(0))));
+[e =| *U -> -> 3987 `i `*VNuc -> << -> 1 `i -> 0 `i `uc ]
+"34
+[; ;i2c.c: 34:  return !!((((*(volatile __near unsigned char*)0xF81)) & (1<<(0))));
+[e ) -> -> ! ! != & -> *U -> -> 3969 `i `*VNuc `i << -> 1 `i -> 0 `i -> 0 `i `i `uc ]
+[e $UE 4  ]
+"35
+[; ;i2c.c: 35: }
+[e :UE 4 ]
+}
+"36
+[; ;i2c.c: 36: void clear_SCL(void)
+[v _clear_SCL `(v ~T0 @X0 1 ef ]
+"37
+[; ;i2c.c: 37: {
+{
+[e :U _clear_SCL ]
+[f ]
+"38
+[; ;i2c.c: 38:  ((((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(1)))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 1 `i `uc ]
+"39
+[; ;i2c.c: 39:  ((((*(volatile __near unsigned char*)0xF81)) = ((*(volatile __near unsigned char*)0xF81)) & (~(1<<(1)))));
+[e = *U -> -> 3969 `i `*VNuc -> & -> *U -> -> 3969 `i `*VNuc `i ~ << -> 1 `i -> 1 `i `uc ]
+"40
+[; ;i2c.c: 40: }
+[e :UE 5 ]
+}
+"42
+[; ;i2c.c: 42: void clear_SDA(void)
+[v _clear_SDA `(v ~T0 @X0 1 ef ]
+"43
+[; ;i2c.c: 43: {
+{
+[e :U _clear_SDA ]
+[f ]
+"44
+[; ;i2c.c: 44:  ((((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(0)))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 0 `i `uc ]
+"45
+[; ;i2c.c: 45:  ((((*(volatile __near unsigned char*)0xF81)) = ((*(volatile __near unsigned char*)0xF81)) & (~(1<<(0)))));
+[e = *U -> -> 3969 `i `*VNuc -> & -> *U -> -> 3969 `i `*VNuc `i ~ << -> 1 `i -> 0 `i `uc ]
+"46
+[; ;i2c.c: 46: }
+[e :UE 6 ]
+}
+"48
+[; ;i2c.c: 48: unsigned char started = 0;
+[v _started `uc ~T0 @X0 1 e ]
+[i _started
+-> -> 0 `i `uc
+]
+"49
+[; ;i2c.c: 49: void i2c_start(void) {
+[v _i2c_start `(v ~T0 @X0 1 ef ]
+{
+[e :U _i2c_start ]
+[f ]
+"51
+[; ;i2c.c: 51:  if (started) {
+[e $ ! != -> _started `i -> 0 `i 8  ]
+{
+"52
+[; ;i2c.c: 52:   read_SDA();
+[e ( _read_SDA ..  ]
+"53
+[; ;i2c.c: 53:   I2C_delay();
+[e ( _I2C_delay ..  ]
+"54
+[; ;i2c.c: 54:   while (read_SCL() == 0);
+[e $U 9  ]
+[e :U 10 ]
+[e :U 9 ]
+[e $ == -> ( _read_SCL ..  `i -> 0 `i 10  ]
+[e :U 11 ]
+"56
+[; ;i2c.c: 56:   I2C_delay();
+[e ( _I2C_delay ..  ]
+"57
+[; ;i2c.c: 57:  }
+}
+[e :U 8 ]
+"58
+[; ;i2c.c: 58:  if (read_SDA() == 0) {
+[e $ ! == -> ( _read_SDA ..  `i -> 0 `i 12  ]
+{
+"60
+[; ;i2c.c: 60:  }
+}
+[e :U 12 ]
+"62
+[; ;i2c.c: 62:  clear_SDA();
+[e ( _clear_SDA ..  ]
+"63
+[; ;i2c.c: 63:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"64
+[; ;i2c.c: 64:  clear_SCL();
+[e ( _clear_SCL ..  ]
+"65
+[; ;i2c.c: 65:  started = 1;
+[e = _started -> -> 1 `i `uc ]
+"66
+[; ;i2c.c: 66: }
+[e :UE 7 ]
+}
+"68
+[; ;i2c.c: 68: void i2c_stop(void) {
+[v _i2c_stop `(v ~T0 @X0 1 ef ]
+{
+[e :U _i2c_stop ]
+[f ]
+"70
+[; ;i2c.c: 70:  clear_SDA();
+[e ( _clear_SDA ..  ]
+"71
+[; ;i2c.c: 71:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"72
+[; ;i2c.c: 72:  while (read_SCL() == 0);
+[e $U 14  ]
+[e :U 15 ]
+[e :U 14 ]
+[e $ == -> ( _read_SCL ..  `i -> 0 `i 15  ]
+[e :U 16 ]
+"73
+[; ;i2c.c: 73:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"74
+[; ;i2c.c: 74:  if (read_SDA() == 0) {
+[e $ ! == -> ( _read_SDA ..  `i -> 0 `i 17  ]
+{
+"76
+[; ;i2c.c: 76:  }
+}
+[e :U 17 ]
+"77
+[; ;i2c.c: 77:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"78
+[; ;i2c.c: 78:  started = 0;
+[e = _started -> -> 0 `i `uc ]
+"79
+[; ;i2c.c: 79: }
+[e :UE 13 ]
+}
+"81
+[; ;i2c.c: 81: void i2c_write_bit(unsigned char bit) {
+[v _i2c_write_bit `(v ~T0 @X0 1 ef1`uc ]
+{
+[e :U _i2c_write_bit ]
+[v _bit `uc ~T0 @X0 1 r1 ]
+[f ]
+"82
+[; ;i2c.c: 82:  if (bit) {
+[e $ ! != -> _bit `i -> 0 `i 19  ]
+{
+"83
+[; ;i2c.c: 83:   read_SDA();
+[e ( _read_SDA ..  ]
+"84
+[; ;i2c.c: 84:  } else {
+}
+[e $U 20  ]
+[e :U 19 ]
+{
+"85
+[; ;i2c.c: 85:   clear_SDA();
+[e ( _clear_SDA ..  ]
+"86
+[; ;i2c.c: 86:  }
+}
+[e :U 20 ]
+"87
+[; ;i2c.c: 87:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"88
+[; ;i2c.c: 88:  while (read_SCL() == 0);
+[e $U 21  ]
+[e :U 22 ]
+[e :U 21 ]
+[e $ == -> ( _read_SCL ..  `i -> 0 `i 22  ]
+[e :U 23 ]
+"89
+[; ;i2c.c: 89:  if (bit && read_SDA() == 0) {
+[e $ ! && != -> _bit `i -> 0 `i == -> ( _read_SDA ..  `i -> 0 `i 24  ]
+{
+"91
+[; ;i2c.c: 91:  }
+}
+[e :U 24 ]
+"92
+[; ;i2c.c: 92:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"93
+[; ;i2c.c: 93:  clear_SCL();
+[e ( _clear_SCL ..  ]
+"94
+[; ;i2c.c: 94:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"95
+[; ;i2c.c: 95: }
+[e :UE 18 ]
+}
+"97
+[; ;i2c.c: 97: unsigned char i2c_read_bit(void) {
+[v _i2c_read_bit `(uc ~T0 @X0 1 ef ]
+{
+[e :U _i2c_read_bit ]
+[f ]
+"98
+[; ;i2c.c: 98:  unsigned char bit;
+[v _bit `uc ~T0 @X0 1 a ]
+"99
+[; ;i2c.c: 99:  read_SDA();
+[e ( _read_SDA ..  ]
+"100
+[; ;i2c.c: 100:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"101
+[; ;i2c.c: 101:  while (read_SCL() == 0);
+[e $U 26  ]
+[e :U 27 ]
+[e :U 26 ]
+[e $ == -> ( _read_SCL ..  `i -> 0 `i 27  ]
+[e :U 28 ]
+"102
+[; ;i2c.c: 102:  bit = read_SDA();
+[e = _bit ( _read_SDA ..  ]
+"103
+[; ;i2c.c: 103:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"104
+[; ;i2c.c: 104:  clear_SCL();
+[e ( _clear_SCL ..  ]
+"105
+[; ;i2c.c: 105:  I2C_delay();
+[e ( _I2C_delay ..  ]
+"106
+[; ;i2c.c: 106:  return bit;
+[e ) _bit ]
+[e $UE 25  ]
+"107
+[; ;i2c.c: 107: }
+[e :UE 25 ]
+}
+"110
+[; ;i2c.c: 110: unsigned char i2cWriteByte(unsigned char send_start, unsigned char send_stop, unsigned char byte) {
+[v _i2cWriteByte `(uc ~T0 @X0 1 ef3`uc`uc`uc ]
+{
+[e :U _i2cWriteByte ]
+[v _send_start `uc ~T0 @X0 1 r1 ]
+[v _send_stop `uc ~T0 @X0 1 r2 ]
+[v _byte `uc ~T0 @X0 1 r3 ]
+[f ]
+"111
+[; ;i2c.c: 111:  unsigned char bit;
+[v _bit `uc ~T0 @X0 1 a ]
+"112
+[; ;i2c.c: 112:  unsigned char nack;
+[v _nack `uc ~T0 @X0 1 a ]
+"113
+[; ;i2c.c: 113:  if (send_start) {
+[e $ ! != -> _send_start `i -> 0 `i 30  ]
+{
+"114
+[; ;i2c.c: 114:   i2c_start();
+[e ( _i2c_start ..  ]
+"115
+[; ;i2c.c: 115:  }
+}
+[e :U 30 ]
+"116
+[; ;i2c.c: 116:  for (bit = 0; bit < 8; bit++) {
+{
+[e = _bit -> -> 0 `i `uc ]
+[e $ < -> _bit `i -> 8 `i 31  ]
+[e $U 32  ]
+[e :U 31 ]
+{
+"117
+[; ;i2c.c: 117:   i2c_write_bit((byte & 0x80) != 0);
+[e ( _i2c_write_bit (1 -> -> != & -> _byte `i -> 128 `i -> 0 `i `i `uc ]
+"118
+[; ;i2c.c: 118:   byte <<= 1;
+[e =<< _byte -> -> 1 `i `uc ]
+"119
+[; ;i2c.c: 119:  }
+}
+[e ++ _bit -> -> 1 `i `uc ]
+[e $ < -> _bit `i -> 8 `i 31  ]
+[e :U 32 ]
+}
+"120
+[; ;i2c.c: 120:  nack = i2c_read_bit();
+[e = _nack ( _i2c_read_bit ..  ]
+"121
+[; ;i2c.c: 121:  if (send_stop) {
+[e $ ! != -> _send_stop `i -> 0 `i 34  ]
+{
+"122
+[; ;i2c.c: 122:   i2c_stop();
+[e ( _i2c_stop ..  ]
+"123
+[; ;i2c.c: 123:  }
+}
+[e :U 34 ]
+"124
+[; ;i2c.c: 124:  return nack;
+[e ) _nack ]
+[e $UE 29  ]
+"125
+[; ;i2c.c: 125: }
+[e :UE 29 ]
+}
+"128
+[; ;i2c.c: 128: unsigned char i2cReadByte(unsigned char nack, unsigned char send_stop) {
+[v _i2cReadByte `(uc ~T0 @X0 1 ef2`uc`uc ]
+{
+[e :U _i2cReadByte ]
+[v _nack `uc ~T0 @X0 1 r1 ]
+[v _send_stop `uc ~T0 @X0 1 r2 ]
+[f ]
+"129
+[; ;i2c.c: 129:  unsigned char byte = 0;
+[v _byte `uc ~T0 @X0 1 a ]
+[e = _byte -> -> 0 `i `uc ]
+"130
+[; ;i2c.c: 130:  unsigned bit;
+[v _bit `ui ~T0 @X0 1 a ]
+"131
+[; ;i2c.c: 131:  for (bit = 0; bit < 8; bit++) {
+{
+[e = _bit -> -> 0 `i `ui ]
+[e $ < _bit -> -> 8 `i `ui 36  ]
+[e $U 37  ]
+[e :U 36 ]
+{
+"132
+[; ;i2c.c: 132:   byte = (byte << 1) | i2c_read_bit();
+[e = _byte -> | << -> _byte `i -> 1 `i -> ( _i2c_read_bit ..  `i `uc ]
+"133
+[; ;i2c.c: 133:  }
+}
+[e ++ _bit -> -> 1 `i `ui ]
+[e $ < _bit -> -> 8 `i `ui 36  ]
+[e :U 37 ]
+}
+"134
+[; ;i2c.c: 134:  i2c_write_bit(nack);
+[e ( _i2c_write_bit (1 _nack ]
+"135
+[; ;i2c.c: 135:  if (send_stop) {
+[e $ ! != -> _send_stop `i -> 0 `i 39  ]
+{
+"136
+[; ;i2c.c: 136:   i2c_stop();
+[e ( _i2c_stop ..  ]
+"137
+[; ;i2c.c: 137:  }
+}
+[e :U 39 ]
+"138
+[; ;i2c.c: 138:  return byte;
+[e ) _byte ]
+[e $UE 35  ]
+"139
+[; ;i2c.c: 139: }
+[e :UE 35 ]
+}

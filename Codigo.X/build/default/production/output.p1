@@ -1,0 +1,565 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"28 ./lcd.h
+[; ;./lcd.h: 28:  void lcdInit(void);
+[v _lcdInit `(v ~T0 @X0 0 ef ]
+"25 ./serial.h
+[; ;./serial.h: 25:  void serialInit(void);
+[v _serialInit `(v ~T0 @X0 0 ef ]
+"32 output.c
+[; ;output.c: 32:     if (numTela == STATE_TEMPO) {
+[c E23 0 1 2 3 4 5 6 .. ]
+[n E23 . STATE_ALARME_TEMP_MAX STATE_ALARME_PRESS_MAX STATE_ALARME_TEMP_MIN STATE_ALARME_PRESS_MIN STATE_TEMPO STATE_IDIOMA STATE_FIM  ]
+"24 ./lcd.h
+[; ;./lcd.h: 24:  void lcdCommand(unsigned char cmd);
+[v _lcdCommand `(v ~T0 @X0 0 ef1`uc ]
+"29
+[; ;./lcd.h: 29:     void lcdString(char msg[]);
+[v _lcdString `(v ~T0 @X0 0 ef1`*uc ]
+"30
+[; ;./lcd.h: 30:     void lcdInt(int val);
+[v _lcdInt `(v ~T0 @X0 0 ef1`i ]
+"15 ./var.h
+[; ;./var.h: 15: int getTime(void);
+[v _getTime `(i ~T0 @X0 0 ef ]
+"23 ./serial.h
+[; ;./serial.h: 23:  void serialSend(unsigned char c);
+[v _serialSend `(v ~T0 @X0 0 ef1`uc ]
+"26
+[; ;./serial.h: 26:     void serialString(const char *str);
+[v _serialString `(v ~T0 @X0 0 ef1`*Cuc ]
+"27
+[; ;./serial.h: 27:     void serialInt(int val);
+[v _serialInt `(v ~T0 @X0 0 ef1`i ]
+"17 ./var.h
+[; ;./var.h: 17: int getAlarmLevel1a(void);
+[v _getAlarmLevel1a `(i ~T0 @X0 0 ef ]
+"65 output.c
+[; ;output.c: 65:         lcdInt(adcRead(1));
+[v _adcRead `(i ~T0 @X0 0 e? ]
+"19 ./var.h
+[; ;./var.h: 19: int getAlarmLevel2a(void);
+[v _getAlarmLevel2a `(i ~T0 @X0 0 ef ]
+"22
+[; ;./var.h: 22: int getAlarmLevel1b(void);
+[v _getAlarmLevel1b `(i ~T0 @X0 0 ef ]
+"24
+[; ;./var.h: 24: int getAlarmLevel2b(void);
+[v _getAlarmLevel2b `(i ~T0 @X0 0 ef ]
+"21
+[; ;./var.h: 21: char getLanguage(void);
+[v _getLanguage `(uc ~T0 @X0 0 ef ]
+[v F64 `*uc ~T0 @X0 -> 2 `i t ]
+"12 output.c
+[; ;output.c: 12: static char * msgs[STATE_FIM][2] = {
+[v _msgs `F64 ~T0 @X0 -> 6 `i s ]
+[i _msgs
+:U ..
+:U ..
+:s 1C
+:s 2C
+..
+:U ..
+:s 3C
+:s 4C
+..
+:U ..
+:s 5C
+:s 6C
+..
+:U ..
+:s 7C
+:s 8C
+..
+:U ..
+:s 9C
+:s 10C
+..
+:U ..
+:s 11C
+:s 12C
+..
+..
+]
+"22
+[; ;output.c: 22: void outputInit(void) {
+[v _outputInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _outputInit ]
+[f ]
+"24
+[; ;output.c: 24:     lcdInit();
+[e ( _lcdInit ..  ]
+"25
+[; ;output.c: 25:     serialInit();
+[e ( _serialInit ..  ]
+"26
+[; ;output.c: 26: }
+[e :UE 1 ]
+}
+"30
+[; ;output.c: 30: void outputPrint(int numTela, int idioma) {
+[v _outputPrint `(v ~T0 @X0 1 ef2`i`i ]
+{
+[e :U _outputPrint ]
+[v _numTela `i ~T0 @X0 1 r1 ]
+[v _idioma `i ~T0 @X0 1 r2 ]
+[f ]
+"32
+[; ;output.c: 32:     if (numTela == STATE_TEMPO) {
+[e $ ! == _numTela -> . `E23 4 `i 3  ]
+{
+"36
+[; ;output.c: 36:         lcdCommand(0x01);
+[e ( _lcdCommand (1 -> -> 1 `i `uc ]
+"37
+[; ;output.c: 37:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"38
+[; ;output.c: 38:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"39
+[; ;output.c: 39:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"40
+[; ;output.c: 40:         lcdInt(getTime());
+[e ( _lcdInt (1 ( _getTime ..  ]
+"41
+[; ;output.c: 41:         lcdString("                    ");
+[e ( _lcdString (1 :s 13C ]
+"45
+[; ;output.c: 45:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 4  ]
+[e $U 5  ]
+[e :U 4 ]
+{
+"46
+[; ;output.c: 46:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"47
+[; ;output.c: 47:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 4  ]
+[e :U 5 ]
+}
+"48
+[; ;output.c: 48:         serialString("Protocolo: PSTIMEX00\r");
+[e ( _serialString (1 :s 14C ]
+"49
+[; ;output.c: 49:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"50
+[; ;output.c: 50:         serialString("   ");
+[e ( _serialString (1 :s 15C ]
+"51
+[; ;output.c: 51:         serialInt(getTime());
+[e ( _serialInt (1 ( _getTime ..  ]
+"52
+[; ;output.c: 52:         serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"54
+[; ;output.c: 54:     }
+}
+[e :U 3 ]
+"55
+[; ;output.c: 55:     if (numTela == STATE_ALARME_TEMP_MAX) {
+[e $ ! == _numTela -> . `E23 0 `i 7  ]
+{
+"59
+[; ;output.c: 59:         lcdCommand(0x01);
+[e ( _lcdCommand (1 -> -> 1 `i `uc ]
+"60
+[; ;output.c: 60:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"61
+[; ;output.c: 61:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"62
+[; ;output.c: 62:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"63
+[; ;output.c: 63:         lcdInt(getAlarmLevel1a());
+[e ( _lcdInt (1 ( _getAlarmLevel1a ..  ]
+"64
+[; ;output.c: 64:         lcdString(" adc=");
+[e ( _lcdString (1 :s 16C ]
+"65
+[; ;output.c: 65:         lcdInt(adcRead(1));
+[e ( _lcdInt (1 ( _adcRead -> 1 `i ]
+"66
+[; ;output.c: 66:         lcdString("                    ");
+[e ( _lcdString (1 :s 17C ]
+"70
+[; ;output.c: 70:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 8  ]
+[e $U 9  ]
+[e :U 8 ]
+{
+"71
+[; ;output.c: 71:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"72
+[; ;output.c: 72:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 8  ]
+[e :U 9 ]
+}
+"73
+[; ;output.c: 73:         serialString("Protocolo: PSMAX1X00\r");
+[e ( _serialString (1 :s 18C ]
+"74
+[; ;output.c: 74:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"75
+[; ;output.c: 75:         serialString("   ");
+[e ( _serialString (1 :s 19C ]
+"76
+[; ;output.c: 76:         serialInt(getAlarmLevel1a());
+[e ( _serialInt (1 ( _getAlarmLevel1a ..  ]
+"77
+[; ;output.c: 77:         serialString(" adc=");
+[e ( _serialString (1 :s 20C ]
+"78
+[; ;output.c: 78:         serialInt(adcRead(1));
+[e ( _serialInt (1 ( _adcRead -> 1 `i ]
+"79
+[; ;output.c: 79:         serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"80
+[; ;output.c: 80:     }
+}
+[e :U 7 ]
+"81
+[; ;output.c: 81:     if (numTela == STATE_ALARME_PRESS_MAX){
+[e $ ! == _numTela -> . `E23 1 `i 11  ]
+{
+"85
+[; ;output.c: 85:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"86
+[; ;output.c: 86:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"87
+[; ;output.c: 87:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"88
+[; ;output.c: 88:         lcdInt(getAlarmLevel2a());
+[e ( _lcdInt (1 ( _getAlarmLevel2a ..  ]
+"89
+[; ;output.c: 89:         lcdString(" adc=");
+[e ( _lcdString (1 :s 21C ]
+"90
+[; ;output.c: 90:         lcdInt(adcRead(3));
+[e ( _lcdInt (1 ( _adcRead -> 3 `i ]
+"91
+[; ;output.c: 91:         lcdString("                    ");
+[e ( _lcdString (1 :s 22C ]
+"95
+[; ;output.c: 95:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 12  ]
+[e $U 13  ]
+[e :U 12 ]
+{
+"96
+[; ;output.c: 96:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"97
+[; ;output.c: 97:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 12  ]
+[e :U 13 ]
+}
+"98
+[; ;output.c: 98:         serialString("Protocolo: PSMAX2X00\r");
+[e ( _serialString (1 :s 23C ]
+"99
+[; ;output.c: 99:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"100
+[; ;output.c: 100:         serialString("   ");
+[e ( _serialString (1 :s 24C ]
+"101
+[; ;output.c: 101:         serialInt(getAlarmLevel2a());
+[e ( _serialInt (1 ( _getAlarmLevel2a ..  ]
+"102
+[; ;output.c: 102:         serialString(" adc=");
+[e ( _serialString (1 :s 25C ]
+"103
+[; ;output.c: 103:         serialInt(adcRead(3));
+[e ( _serialInt (1 ( _adcRead -> 3 `i ]
+"104
+[; ;output.c: 104:         serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"106
+[; ;output.c: 106:     }
+}
+[e :U 11 ]
+"107
+[; ;output.c: 107:     if(numTela == STATE_ALARME_TEMP_MIN){
+[e $ ! == _numTela -> . `E23 2 `i 15  ]
+{
+"111
+[; ;output.c: 111:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"112
+[; ;output.c: 112:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"113
+[; ;output.c: 113:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"114
+[; ;output.c: 114:         lcdInt(getAlarmLevel1b());
+[e ( _lcdInt (1 ( _getAlarmLevel1b ..  ]
+"115
+[; ;output.c: 115:         lcdString(" adc=");
+[e ( _lcdString (1 :s 26C ]
+"116
+[; ;output.c: 116:         lcdInt(adcRead(1));
+[e ( _lcdInt (1 ( _adcRead -> 1 `i ]
+"117
+[; ;output.c: 117:         lcdString("                    ");
+[e ( _lcdString (1 :s 27C ]
+"121
+[; ;output.c: 121:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 16  ]
+[e $U 17  ]
+[e :U 16 ]
+{
+"122
+[; ;output.c: 122:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"123
+[; ;output.c: 123:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 16  ]
+[e :U 17 ]
+}
+"124
+[; ;output.c: 124:         serialString("Protocolo: PSMIN1X00\r");
+[e ( _serialString (1 :s 28C ]
+"125
+[; ;output.c: 125:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"126
+[; ;output.c: 126:         serialString("   ");
+[e ( _serialString (1 :s 29C ]
+"127
+[; ;output.c: 127:         serialInt(getAlarmLevel1b());
+[e ( _serialInt (1 ( _getAlarmLevel1b ..  ]
+"128
+[; ;output.c: 128:         serialString(" adc=");
+[e ( _serialString (1 :s 30C ]
+"129
+[; ;output.c: 129:         serialInt(adcRead(1));
+[e ( _serialInt (1 ( _adcRead -> 1 `i ]
+"130
+[; ;output.c: 130:         serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"132
+[; ;output.c: 132:     }
+}
+[e :U 15 ]
+"133
+[; ;output.c: 133:     if (numTela == STATE_ALARME_PRESS_MIN) {
+[e $ ! == _numTela -> . `E23 3 `i 19  ]
+{
+"137
+[; ;output.c: 137:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"138
+[; ;output.c: 138:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"139
+[; ;output.c: 139:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"140
+[; ;output.c: 140:         lcdInt(getAlarmLevel2b());
+[e ( _lcdInt (1 ( _getAlarmLevel2b ..  ]
+"141
+[; ;output.c: 141:         lcdString(" adc=");
+[e ( _lcdString (1 :s 31C ]
+"142
+[; ;output.c: 142:         lcdInt(adcRead(3));
+[e ( _lcdInt (1 ( _adcRead -> 3 `i ]
+"143
+[; ;output.c: 143:         lcdString("                    ");
+[e ( _lcdString (1 :s 32C ]
+"147
+[; ;output.c: 147:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 20  ]
+[e $U 21  ]
+[e :U 20 ]
+{
+"148
+[; ;output.c: 148:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"149
+[; ;output.c: 149:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 20  ]
+[e :U 21 ]
+}
+"150
+[; ;output.c: 150:         serialString("Protocolo: PSMIN2X00\r");
+[e ( _serialString (1 :s 33C ]
+"151
+[; ;output.c: 151:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"152
+[; ;output.c: 152:         serialString("   ");
+[e ( _serialString (1 :s 34C ]
+"153
+[; ;output.c: 153:         serialInt(getAlarmLevel2b());
+[e ( _serialInt (1 ( _getAlarmLevel2b ..  ]
+"154
+[; ;output.c: 154:         serialString(" adc=");
+[e ( _serialString (1 :s 35C ]
+"155
+[; ;output.c: 155:         serialInt(adcRead(3));
+[e ( _serialInt (1 ( _adcRead -> 3 `i ]
+"156
+[; ;output.c: 156:         serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"158
+[; ;output.c: 158:     }
+}
+[e :U 19 ]
+"159
+[; ;output.c: 159:     if (numTela == STATE_IDIOMA) {
+[e $ ! == _numTela -> . `E23 5 `i 23  ]
+{
+"163
+[; ;output.c: 163:         lcdCommand(0x01);
+[e ( _lcdCommand (1 -> -> 1 `i `uc ]
+"164
+[; ;output.c: 164:         lcdCommand(0x80);
+[e ( _lcdCommand (1 -> -> 128 `i `uc ]
+"165
+[; ;output.c: 165:         lcdString(msgs[numTela][idioma]);
+[e ( _lcdString (1 *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux ]
+"169
+[; ;output.c: 169:         for(int i=0;i<32;i++){
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 32 `i 24  ]
+[e $U 25  ]
+[e :U 24 ]
+{
+"170
+[; ;output.c: 170:             serialSend('\b');
+[e ( _serialSend (1 -> -> 8 `ui `uc ]
+"171
+[; ;output.c: 171:         }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 32 `i 24  ]
+[e :U 25 ]
+}
+"172
+[; ;output.c: 172:         serialString("   ");
+[e ( _serialString (1 :s 36C ]
+"173
+[; ;output.c: 173:         serialString(msgs[numTela][idioma]);
+[e ( _serialString (1 -> *U + &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux * -> -> _idioma `ui `ux -> -> # *U &U *U + &U _msgs * -> -> _numTela `ui `ux -> * -> # *U &U *U &U _msgs `ui -> -> 2 `i `ui `ux `ui `ux `*Cuc ]
+"177
+[; ;output.c: 177:         lcdCommand(0xC0);
+[e ( _lcdCommand (1 -> -> 192 `i `uc ]
+"178
+[; ;output.c: 178:         if (getLanguage() == 0) {
+[e $ ! == -> ( _getLanguage ..  `i -> 0 `i 27  ]
+{
+"179
+[; ;output.c: 179:             lcdString("Portugues       ");
+[e ( _lcdString (1 :s 37C ]
+"180
+[; ;output.c: 180:             serialString("Portugues       ");
+[e ( _serialString (1 :s 38C ]
+"182
+[; ;output.c: 182:         }
+}
+[e :U 27 ]
+"183
+[; ;output.c: 183:         if (getLanguage() == 1) {
+[e $ ! == -> ( _getLanguage ..  `i -> 1 `i 28  ]
+{
+"184
+[; ;output.c: 184:             lcdString("English         ");
+[e ( _lcdString (1 :s 39C ]
+"185
+[; ;output.c: 185:             lcdString("English         ");
+[e ( _lcdString (1 :s 40C ]
+"186
+[; ;output.c: 186:         }
+}
+[e :U 28 ]
+"187
+[; ;output.c: 187:          serialSend('\r');
+[e ( _serialSend (1 -> -> 13 `ui `uc ]
+"189
+[; ;output.c: 189:     }
+}
+[e :U 23 ]
+"191
+[; ;output.c: 191: }
+[e :UE 2 ]
+}
+[a 16C 32 97 100 99 61 0 ]
+[a 20C 32 97 100 99 61 0 ]
+[a 21C 32 97 100 99 61 0 ]
+[a 25C 32 97 100 99 61 0 ]
+[a 26C 32 97 100 99 61 0 ]
+[a 30C 32 97 100 99 61 0 ]
+[a 31C 32 97 100 99 61 0 ]
+[a 35C 32 97 100 99 61 0 ]
+[a 12C 67 104 97 110 103 101 32 108 97 110 103 117 97 103 101 32 0 ]
+[a 11C 65 108 116 101 114 97 114 32 105 100 105 111 109 97 32 0 ]
+[a 3C 77 97 120 32 97 108 97 114 109 101 32 50 32 0 ]
+[a 7C 77 105 110 32 97 108 97 114 109 101 32 50 32 0 ]
+[a 1C 77 97 120 32 97 108 97 114 109 101 32 49 32 0 ]
+[a 5C 77 105 110 32 97 108 97 114 109 101 32 49 32 0 ]
+[a 9C 65 108 116 101 114 97 114 32 116 101 109 112 111 32 32 0 ]
+[a 4C 77 97 120 32 97 108 97 114 109 32 50 32 32 0 ]
+[a 8C 77 105 110 32 97 108 97 114 109 32 50 32 32 0 ]
+[a 2C 77 97 120 32 97 108 97 114 109 32 49 32 32 0 ]
+[a 6C 77 105 110 32 97 108 97 114 109 32 49 32 32 0 ]
+[a 10C 67 104 97 110 103 101 32 116 105 109 101 32 32 32 32 32 0 ]
+[a 37C 80 111 114 116 117 103 117 101 115 32 32 32 32 32 32 32 0 ]
+[a 38C 80 111 114 116 117 103 117 101 115 32 32 32 32 32 32 32 0 ]
+[a 39C 69 110 103 108 105 115 104 32 32 32 32 32 32 32 32 32 0 ]
+[a 40C 69 110 103 108 105 115 104 32 32 32 32 32 32 32 32 32 0 ]
+[a 13C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 17C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 22C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 27C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 32C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 15C 32 32 32 0 ]
+[a 19C 32 32 32 0 ]
+[a 24C 32 32 32 0 ]
+[a 29C 32 32 32 0 ]
+[a 34C 32 32 32 0 ]
+[a 36C 32 32 32 0 ]
+[a 14C 80 114 111 116 111 99 111 108 111 58 32 80 83 84 73 77 69 88 48 48 13 0 ]
+[a 23C 80 114 111 116 111 99 111 108 111 58 32 80 83 77 65 88 50 88 48 48 13 0 ]
+[a 33C 80 114 111 116 111 99 111 108 111 58 32 80 83 77 73 78 50 88 48 48 13 0 ]
+[a 18C 80 114 111 116 111 99 111 108 111 58 32 80 83 77 65 88 49 88 48 48 13 0 ]
+[a 28C 80 114 111 116 111 99 111 108 111 58 32 80 83 77 73 78 49 88 48 48 13 0 ]

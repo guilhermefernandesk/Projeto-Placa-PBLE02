@@ -1,0 +1,326 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"31 ./config.h
+[p x MCLRE=ON                 ]
+"32
+[p x FOSC=HS                  ]
+"33
+[p x WDT=OFF                  ]
+"34
+[p x LVP=OFF                  ]
+"35
+[p x ICPRT=ON ]
+"36
+[p x CCP2MX  =  OFF ]
+"7 led.c
+[; ;led.c: 7: void ledInit(void)
+[v _ledInit `(v ~T0 @X0 1 ef ]
+"8
+[; ;led.c: 8: {
+{
+[e :U _ledInit ]
+[f ]
+"10
+[; ;led.c: 10:   (((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(4))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 4 `i `uc ]
+"11
+[; ;led.c: 11:   (((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(5))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 5 `i `uc ]
+"12
+[; ;led.c: 12:   (((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(6))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 6 `i `uc ]
+"13
+[; ;led.c: 13:   (((*(volatile __near unsigned char*)0xF93)) = ((*(volatile __near unsigned char*)0xF93)) & (~(1<<(7))));
+[e = *U -> -> 3987 `i `*VNuc -> & -> *U -> -> 3987 `i `*VNuc `i ~ << -> 1 `i -> 7 `i `uc ]
+"15
+[; ;led.c: 15:   (*(volatile __near unsigned char*)0xFC1) = 0b00001110;
+[e = *U -> -> 4033 `i `*VNuc -> -> 14 `i `uc ]
+"16
+[; ;led.c: 16: }
+[e :UE 1 ]
+}
+"17
+[; ;led.c: 17: void ledState(char num, char state)
+[v _ledState `(v ~T0 @X0 1 ef2`uc`uc ]
+"18
+[; ;led.c: 18: {
+{
+[e :U _ledState ]
+"17
+[; ;led.c: 17: void ledState(char num, char state)
+[v _num `uc ~T0 @X0 1 r1 ]
+[v _state `uc ~T0 @X0 1 r2 ]
+"18
+[; ;led.c: 18: {
+[f ]
+"20
+[; ;led.c: 20:     if(state==1){
+[e $ ! == -> _state `i -> 1 `i 3  ]
+{
+"21
+[; ;led.c: 21:         if(num==4)
+[e $ ! == -> _num `i -> 4 `i 4  ]
+"22
+[; ;led.c: 22:             (((*(volatile __near unsigned char*)0xF83)) = ((*(volatile __near unsigned char*)0xF83)) & (~(1<<(6))));
+[e = *U -> -> 3971 `i `*VNuc -> & -> *U -> -> 3971 `i `*VNuc `i ~ << -> 1 `i -> 6 `i `uc ]
+[e $U 5  ]
+"23
+[; ;led.c: 23:         else{
+[e :U 4 ]
+{
+"24
+[; ;led.c: 24:             if(num==0)
+[e $ ! == -> _num `i -> 0 `i 6  ]
+"25
+[; ;led.c: 25:                 (((*(volatile __near unsigned char*)0xF81)) = ((*(volatile __near unsigned char*)0xF81)) & (~(1<<(4))));
+[e = *U -> -> 3969 `i `*VNuc -> & -> *U -> -> 3969 `i `*VNuc `i ~ << -> 1 `i -> 4 `i `uc ]
+[e $U 7  ]
+"26
+[; ;led.c: 26:             else
+[e :U 6 ]
+"27
+[; ;led.c: 27:                 (((*(volatile __near unsigned char*)0xF81)) = ((*(volatile __near unsigned char*)0xF81)) & (~(1<<((num+4)))));
+[e = *U -> -> 3969 `i `*VNuc -> & -> *U -> -> 3969 `i `*VNuc `i ~ << -> 1 `i + -> _num `i -> 4 `i `uc ]
+[e :U 7 ]
+"28
+[; ;led.c: 28:          }
+}
+[e :U 5 ]
+"29
+[; ;led.c: 29:     }
+}
+[e :U 3 ]
+"31
+[; ;led.c: 31:     if(state==0){
+[e $ ! == -> _state `i -> 0 `i 8  ]
+{
+"32
+[; ;led.c: 32:         if(num==4)
+[e $ ! == -> _num `i -> 4 `i 9  ]
+"33
+[; ;led.c: 33:             (((*(volatile __near unsigned char*)0xF83)) |= (1<<(6)));
+[e =| *U -> -> 3971 `i `*VNuc -> << -> 1 `i -> 6 `i `uc ]
+[e $U 10  ]
+"34
+[; ;led.c: 34:          else{
+[e :U 9 ]
+{
+"35
+[; ;led.c: 35:             if(num==0)
+[e $ ! == -> _num `i -> 0 `i 11  ]
+"36
+[; ;led.c: 36:                 (((*(volatile __near unsigned char*)0xF81)) |= (1<<(4)));
+[e =| *U -> -> 3969 `i `*VNuc -> << -> 1 `i -> 4 `i `uc ]
+[e $U 12  ]
+"37
+[; ;led.c: 37:             else
+[e :U 11 ]
+"38
+[; ;led.c: 38:                 (((*(volatile __near unsigned char*)0xF81)) |= (1<<((num+4))));
+[e =| *U -> -> 3969 `i `*VNuc -> << -> 1 `i + -> _num `i -> 4 `i `uc ]
+[e :U 12 ]
+"39
+[; ;led.c: 39:          }
+}
+[e :U 10 ]
+"40
+[; ;led.c: 40:     }
+}
+[e :U 8 ]
+"41
+[; ;led.c: 41: }
+[e :UE 2 ]
+}
+"42
+[; ;led.c: 42: void ledAll(char s)
+[v _ledAll `(v ~T0 @X0 1 ef1`uc ]
+"43
+[; ;led.c: 43: {
+{
+[e :U _ledAll ]
+"42
+[; ;led.c: 42: void ledAll(char s)
+[v _s `uc ~T0 @X0 1 r1 ]
+"43
+[; ;led.c: 43: {
+[f ]
+"45
+[; ;led.c: 45:     ledState(0,s);
+[e ( _ledState (2 , -> -> 0 `i `uc _s ]
+"46
+[; ;led.c: 46:     ledState(1,s);
+[e ( _ledState (2 , -> -> 1 `i `uc _s ]
+"47
+[; ;led.c: 47:     ledState(2,s);
+[e ( _ledState (2 , -> -> 2 `i `uc _s ]
+"48
+[; ;led.c: 48:     ledState(3,s);
+[e ( _ledState (2 , -> -> 3 `i `uc _s ]
+"49
+[; ;led.c: 49:     ledState(4,s);
+[e ( _ledState (2 , -> -> 4 `i `uc _s ]
+"50
+[; ;led.c: 50: }
+[e :UE 13 ]
+}
+"52
+[; ;led.c: 52: void ledTst(void)
+[v _ledTst `(v ~T0 @X0 1 ef ]
+"53
+[; ;led.c: 53: {
+{
+[e :U _ledTst ]
+[f ]
+"55
+[; ;led.c: 55:     ledState(0,1);
+[e ( _ledState (2 , -> -> 0 `i `uc -> -> 1 `i `uc ]
+"56
+[; ;led.c: 56:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 15  ]
+[e $U 16  ]
+[e :U 15 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 15  ]
+[e :U 16 ]
+}
+"57
+[; ;led.c: 57:     ledState(1,1);
+[e ( _ledState (2 , -> -> 1 `i `uc -> -> 1 `i `uc ]
+"58
+[; ;led.c: 58:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 18  ]
+[e $U 19  ]
+[e :U 18 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 18  ]
+[e :U 19 ]
+}
+"59
+[; ;led.c: 59:     ledState(2,1);
+[e ( _ledState (2 , -> -> 2 `i `uc -> -> 1 `i `uc ]
+"60
+[; ;led.c: 60:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 21  ]
+[e $U 22  ]
+[e :U 21 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 21  ]
+[e :U 22 ]
+}
+"61
+[; ;led.c: 61:     ledState(3,1);
+[e ( _ledState (2 , -> -> 3 `i `uc -> -> 1 `i `uc ]
+"62
+[; ;led.c: 62:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 24  ]
+[e $U 25  ]
+[e :U 24 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 24  ]
+[e :U 25 ]
+}
+"63
+[; ;led.c: 63:     ledState(4,1);
+[e ( _ledState (2 , -> -> 4 `i `uc -> -> 1 `i `uc ]
+"64
+[; ;led.c: 64:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 27  ]
+[e $U 28  ]
+[e :U 27 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 27  ]
+[e :U 28 ]
+}
+"65
+[; ;led.c: 65:     ledState(0,0);
+[e ( _ledState (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"66
+[; ;led.c: 66:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 30  ]
+[e $U 31  ]
+[e :U 30 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 30  ]
+[e :U 31 ]
+}
+"67
+[; ;led.c: 67:     ledState(1,0);
+[e ( _ledState (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"68
+[; ;led.c: 68:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 33  ]
+[e $U 34  ]
+[e :U 33 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 33  ]
+[e :U 34 ]
+}
+"69
+[; ;led.c: 69:     ledState(2,0);
+[e ( _ledState (2 , -> -> 2 `i `uc -> -> 0 `i `uc ]
+"70
+[; ;led.c: 70:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 36  ]
+[e $U 37  ]
+[e :U 36 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 36  ]
+[e :U 37 ]
+}
+"71
+[; ;led.c: 71:     ledState(3,0);
+[e ( _ledState (2 , -> -> 3 `i `uc -> -> 0 `i `uc ]
+"72
+[; ;led.c: 72:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 39  ]
+[e $U 40  ]
+[e :U 39 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 39  ]
+[e :U 40 ]
+}
+"73
+[; ;led.c: 73:     ledState(4,0);
+[e ( _ledState (2 , -> -> 4 `i `uc -> -> 0 `i `uc ]
+"74
+[; ;led.c: 74:     for(long int i=0;i<50000;i++);
+{
+[v _i `l ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `l ]
+[e $ < _i -> 50000 `l 42  ]
+[e $U 43  ]
+[e :U 42 ]
+[e ++ _i -> -> 1 `i `l ]
+[e $ < _i -> 50000 `l 42  ]
+[e :U 43 ]
+}
+"75
+[; ;led.c: 75: }
+[e :UE 14 ]
+}

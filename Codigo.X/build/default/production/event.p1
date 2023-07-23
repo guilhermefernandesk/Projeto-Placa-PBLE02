@@ -1,0 +1,299 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"5 ./button.h
+[; ;./button.h: 5:  void butInit(void);
+[v _butInit `(v ~T0 @X0 0 ef ]
+"25 ./serial.h
+[; ;./serial.h: 25:  void serialInit(void);
+[v _serialInit `(v ~T0 @X0 0 ef ]
+"23 event.c
+[; ;event.c: 23:     int ev = EV_NOEVENT;
+[c E5 0 1 2 3 4 5 .. ]
+[n E5 . EV_UP EV_DOWN EV_LEFT EV_RIGHT EV_ENTER EV_NOEVENT  ]
+"6 ./button.h
+[; ;./button.h: 6:     char butRead(char num);
+[v _butRead `(uc ~T0 @X0 0 ef1`uc ]
+"24 ./serial.h
+[; ;./serial.h: 24:  unsigned char serialRead(void);
+[v _serialRead `(uc ~T0 @X0 0 ef ]
+"18 ./var.h
+[; ;./var.h: 18: void setAlarmLevel1a(int newAlarmLevel1a);
+[v _setAlarmLevel1a `(v ~T0 @X0 0 ef1`i ]
+"20
+[; ;./var.h: 20: void setAlarmLevel2a(int newAlarmLevel2a);
+[v _setAlarmLevel2a `(v ~T0 @X0 0 ef1`i ]
+"23
+[; ;./var.h: 23: void setAlarmLevel1b(int newAlarmLevel1b);
+[v _setAlarmLevel1b `(v ~T0 @X0 0 ef1`i ]
+"25
+[; ;./var.h: 25: void setAlarmLevel2b(int newAlarmLevel2b);
+[v _setAlarmLevel2b `(v ~T0 @X0 0 ef1`i ]
+"16
+[; ;./var.h: 16: void setTime(int newTime);
+[v _setTime `(v ~T0 @X0 0 ef1`i ]
+"6 event.c
+[; ;event.c: 6: static unsigned int key_ant;
+[v _key_ant `ui ~T0 @X0 1 s ]
+"9
+[; ;event.c: 9: void eventInit(void) {
+[v _eventInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _eventInit ]
+[f ]
+"10
+[; ;event.c: 10:     butInit();
+[e ( _butInit ..  ]
+"11
+[; ;event.c: 11:     serialInit();
+[e ( _serialInit ..  ]
+"12
+[; ;event.c: 12:     key_ant = 0;
+[e = _key_ant -> -> 0 `i `ui ]
+"13
+[; ;event.c: 13: }
+[e :UE 1 ]
+}
+"15
+[; ;event.c: 15: unsigned char a;
+[v _a `uc ~T0 @X0 1 e ]
+"16
+[; ;event.c: 16: unsigned char pos = 0;
+[v _pos `uc ~T0 @X0 1 e ]
+[i _pos
+-> -> 0 `i `uc
+]
+"17
+[; ;event.c: 17: char buffer[15];
+[v _buffer `uc ~T0 @X0 -> 15 `i e ]
+"21
+[; ;event.c: 21: unsigned int eventRead(void) {
+[v _eventRead `(ui ~T0 @X0 1 ef ]
+{
+[e :U _eventRead ]
+[f ]
+"22
+[; ;event.c: 22:     int key = 1;
+[v _key `i ~T0 @X0 1 a ]
+[e = _key -> 1 `i ]
+"23
+[; ;event.c: 23:     int ev = EV_NOEVENT;
+[v _ev `i ~T0 @X0 1 a ]
+[e = _ev -> . `E5 5 `i ]
+"24
+[; ;event.c: 24:     unsigned char ser;
+[v _ser `uc ~T0 @X0 1 a ]
+"28
+[; ;event.c: 28:     if (key != key_ant) {
+[e $ ! != -> _key `ui _key_ant 3  ]
+{
+"29
+[; ;event.c: 29:         if (butRead(0)) {
+[e $ ! != -> ( _butRead (1 -> -> 0 `i `uc `i -> 0 `i 4  ]
+{
+"30
+[; ;event.c: 30:             ev = EV_RIGHT;
+[e = _ev -> . `E5 3 `i ]
+"31
+[; ;event.c: 31:             key_ant = key;
+[e = _key_ant -> _key `ui ]
+"32
+[; ;event.c: 32:         }
+}
+[e :U 4 ]
+"34
+[; ;event.c: 34:         if (butRead(1)) {
+[e $ ! != -> ( _butRead (1 -> -> 1 `i `uc `i -> 0 `i 5  ]
+{
+"35
+[; ;event.c: 35:             ev = EV_LEFT;
+[e = _ev -> . `E5 2 `i ]
+"36
+[; ;event.c: 36:             key_ant = key;
+[e = _key_ant -> _key `ui ]
+"37
+[; ;event.c: 37:         }
+}
+[e :U 5 ]
+"39
+[; ;event.c: 39:         if (butRead(2)) {
+[e $ ! != -> ( _butRead (1 -> -> 2 `i `uc `i -> 0 `i 6  ]
+{
+"40
+[; ;event.c: 40:             ev = EV_ENTER;
+[e = _ev -> . `E5 4 `i ]
+"41
+[; ;event.c: 41:             key_ant = key;
+[e = _key_ant -> _key `ui ]
+"42
+[; ;event.c: 42:         }
+}
+[e :U 6 ]
+"43
+[; ;event.c: 43:     }
+}
+[e :U 3 ]
+"44
+[; ;event.c: 44:     key_ant = 0;
+[e = _key_ant -> -> 0 `i `ui ]
+"49
+[; ;event.c: 49:     int temp = 0;
+[v _temp `i ~T0 @X0 1 a ]
+[e = _temp -> 0 `i ]
+"50
+[; ;event.c: 50:     ser = serialRead();
+[e = _ser ( _serialRead ..  ]
+"52
+[; ;event.c: 52:     if (ser == 'P') {
+[e $ ! == -> _ser `ui -> 80 `ui 7  ]
+{
+"53
+[; ;event.c: 53:         pos = 0;
+[e = _pos -> -> 0 `i `uc ]
+"54
+[; ;event.c: 54:     }
+}
+[e :U 7 ]
+"56
+[; ;event.c: 56:     if ((ser != 0)) {
+[e $ ! != -> _ser `i -> 0 `i 8  ]
+{
+"58
+[; ;event.c: 58:         buffer[pos] = ser;
+[e = *U + &U _buffer * -> _pos `ux -> -> # *U &U _buffer `ui `ux -> _ser `uc ]
+"59
+[; ;event.c: 59:         pos++;
+[e ++ _pos -> -> 1 `i `uc ]
+"60
+[; ;event.c: 60:         if (pos >= 15) {
+[e $ ! >= -> _pos `i -> 15 `i 9  ]
+{
+"61
+[; ;event.c: 61:             pos = 0;
+[e = _pos -> -> 0 `i `uc ]
+"62
+[; ;event.c: 62:         }
+}
+[e :U 9 ]
+"63
+[; ;event.c: 63:     }
+}
+[e :U 8 ]
+"67
+[; ;event.c: 67:     if (pos == 9) {
+[e $ ! == -> _pos `i -> 9 `i 10  ]
+{
+"68
+[; ;event.c: 68:         pos = 0;
+[e = _pos -> -> 0 `i `uc ]
+"69
+[; ;event.c: 69:         temp = (((buffer[7] - 48)* 10)+
+[e = _temp + * - -> *U + &U _buffer * -> -> -> 7 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 48 `i -> 10 `i * - -> *U + &U _buffer * -> -> -> 8 `i `ui `ux -> -> # *U &U _buffer `ui `ux `i -> 48 `i -> 1 `i ]
+"71
+[; ;event.c: 71:         if ((buffer[0] == 'P') &&
+[e $ ! && && && && && && == -> *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 80 `ui == -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 83 `ui == -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 77 `ui == -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 65 `ui == -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui == -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 49 `ui == -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui 11  ]
+"77
+[; ;event.c: 77:                 (buffer[6] == 'X')) {
+{
+"78
+[; ;event.c: 78:             setAlarmLevel1a(temp);
+[e ( _setAlarmLevel1a (1 _temp ]
+"79
+[; ;event.c: 79:         }
+}
+[e :U 11 ]
+"80
+[; ;event.c: 80:         if ((buffer[0] == 'P') &&
+[e $ ! && && && && && && == -> *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 80 `ui == -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 83 `ui == -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 77 `ui == -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 65 `ui == -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui == -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 50 `ui == -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui 12  ]
+"86
+[; ;event.c: 86:                 (buffer[6] == 'X')) {
+{
+"87
+[; ;event.c: 87:             setAlarmLevel2a(temp);
+[e ( _setAlarmLevel2a (1 _temp ]
+"88
+[; ;event.c: 88:         }
+}
+[e :U 12 ]
+"89
+[; ;event.c: 89:         if ((buffer[0] == 'P') &&
+[e $ ! && && && && && && == -> *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 80 `ui == -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 83 `ui == -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 77 `ui == -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 73 `ui == -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 78 `ui == -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 49 `ui == -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui 13  ]
+"95
+[; ;event.c: 95:                 (buffer[6] == 'X')) {
+{
+"96
+[; ;event.c: 96:             setAlarmLevel1b(temp);
+[e ( _setAlarmLevel1b (1 _temp ]
+"97
+[; ;event.c: 97:         }
+}
+[e :U 13 ]
+"98
+[; ;event.c: 98:         if ((buffer[0] == 'P') &&
+[e $ ! && && && && && && == -> *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 80 `ui == -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 83 `ui == -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 77 `ui == -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 73 `ui == -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 78 `ui == -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 50 `ui == -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui 14  ]
+"104
+[; ;event.c: 104:                 (buffer[6] == 'X')) {
+{
+"105
+[; ;event.c: 105:             setAlarmLevel2b(temp);
+[e ( _setAlarmLevel2b (1 _temp ]
+"106
+[; ;event.c: 106:         }
+}
+[e :U 14 ]
+"107
+[; ;event.c: 107:         if ((buffer[0] == 'P') &&
+[e $ ! && && && && && && == -> *U + &U _buffer * -> -> -> 0 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 80 `ui == -> *U + &U _buffer * -> -> -> 1 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 83 `ui == -> *U + &U _buffer * -> -> -> 2 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 84 `ui == -> *U + &U _buffer * -> -> -> 3 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 73 `ui == -> *U + &U _buffer * -> -> -> 4 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 77 `ui == -> *U + &U _buffer * -> -> -> 5 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 69 `ui == -> *U + &U _buffer * -> -> -> 6 `i `ui `ux -> -> # *U &U _buffer `ui `ux `ui -> 88 `ui 15  ]
+"113
+[; ;event.c: 113:                 (buffer[6] == 'X')) {
+{
+"114
+[; ;event.c: 114:             setTime(temp);
+[e ( _setTime (1 _temp ]
+"115
+[; ;event.c: 115:         }
+}
+[e :U 15 ]
+"116
+[; ;event.c: 116:     }
+}
+[e :U 10 ]
+"120
+[; ;event.c: 120:     if (ser == 'd') {
+[e $ ! == -> _ser `ui -> 100 `ui 16  ]
+{
+"121
+[; ;event.c: 121:         ev = EV_RIGHT;
+[e = _ev -> . `E5 3 `i ]
+"122
+[; ;event.c: 122:     }
+}
+[e :U 16 ]
+"123
+[; ;event.c: 123:     if (ser == 'a') {
+[e $ ! == -> _ser `ui -> 97 `ui 17  ]
+{
+"124
+[; ;event.c: 124:         ev = EV_LEFT;
+[e = _ev -> . `E5 2 `i ]
+"125
+[; ;event.c: 125:     }
+}
+[e :U 17 ]
+"127
+[; ;event.c: 127:     if (ser == 'e') {
+[e $ ! == -> _ser `ui -> 101 `ui 18  ]
+{
+"128
+[; ;event.c: 128:         ev = EV_ENTER;
+[e = _ev -> . `E5 4 `i ]
+"129
+[; ;event.c: 129:     }
+}
+[e :U 18 ]
+"130
+[; ;event.c: 130:     return ev;
+[e ) -> _ev `ui ]
+[e $UE 2  ]
+"131
+[; ;event.c: 131: }
+[e :UE 2 ]
+}

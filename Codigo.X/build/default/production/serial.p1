@@ -1,0 +1,167 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"23 serial.c
+[; ;serial.c: 23: void serialInit(void) {
+[v _serialInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _serialInit ]
+[f ]
+"24
+[; ;serial.c: 24:     (*(volatile __near unsigned char*)0xFAC) = 0b00101100;
+[e = *U -> -> 4012 `i `*VNuc -> -> 44 `i `uc ]
+"25
+[; ;serial.c: 25:     (*(volatile __near unsigned char*)0xFAB) = 0b10010000;
+[e = *U -> -> 4011 `i `*VNuc -> -> 144 `i `uc ]
+"26
+[; ;serial.c: 26:     (*(volatile __near unsigned char*)0xFB8) = 0b00001000;
+[e = *U -> -> 4024 `i `*VNuc -> -> 8 `i `uc ]
+"27
+[; ;serial.c: 27:     (*(volatile __near unsigned char*)0xFB0) = 0b00000000;
+[e = *U -> -> 4016 `i `*VNuc -> -> 0 `i `uc ]
+"28
+[; ;serial.c: 28:     (*(volatile __near unsigned char*)0xFAF) = 0b00100010;
+[e = *U -> -> 4015 `i `*VNuc -> -> 34 `i `uc ]
+"29
+[; ;serial.c: 29:     (((*(volatile __near unsigned char*)0xF94)) |= (1<<(6)));
+[e =| *U -> -> 3988 `i `*VNuc -> << -> 1 `i -> 6 `i `uc ]
+"30
+[; ;serial.c: 30:     (((*(volatile __near unsigned char*)0xF94)) |= (1<<(7)));
+[e =| *U -> -> 3988 `i `*VNuc -> << -> 1 `i -> 7 `i `uc ]
+"31
+[; ;serial.c: 31: }
+[e :UE 1 ]
+}
+"34
+[; ;serial.c: 34: void serialSend(unsigned char c) {
+[v _serialSend `(v ~T0 @X0 1 ef1`uc ]
+{
+[e :U _serialSend ]
+[v _c `uc ~T0 @X0 1 r1 ]
+[f ]
+"36
+[; ;serial.c: 36:     while (!(((*(volatile __near unsigned char*)0xF9E)) & (1<<(4))));
+[e $U 3  ]
+[e :U 4 ]
+[e :U 3 ]
+[e $ ! != & -> *U -> -> 3998 `i `*VNuc `i << -> 1 `i -> 4 `i -> 0 `i 4  ]
+[e :U 5 ]
+"37
+[; ;serial.c: 37:     (*(volatile __near unsigned char*)0xFAD) = c;
+[e = *U -> -> 4013 `i `*VNuc _c ]
+"38
+[; ;serial.c: 38: }
+[e :UE 2 ]
+}
+"41
+[; ;serial.c: 41: unsigned char serialRead(void) {
+[v _serialRead `(uc ~T0 @X0 1 ef ]
+{
+[e :U _serialRead ]
+[f ]
+"43
+[; ;serial.c: 43:     char resp = 0;
+[v _resp `uc ~T0 @X0 1 a ]
+[e = _resp -> -> 0 `i `uc ]
+"45
+[; ;serial.c: 45:     if ((((*(volatile __near unsigned char*)0xFAB)) & (1<<(1))))
+[e $ ! != & -> *U -> -> 4011 `i `*VNuc `i << -> 1 `i -> 1 `i -> 0 `i 7  ]
+"46
+[; ;serial.c: 46:     {
+{
+"47
+[; ;serial.c: 47:         (((*(volatile __near unsigned char*)0xFAB)) = ((*(volatile __near unsigned char*)0xFAB)) & (~(1<<(4))));
+[e = *U -> -> 4011 `i `*VNuc -> & -> *U -> -> 4011 `i `*VNuc `i ~ << -> 1 `i -> 4 `i `uc ]
+"48
+[; ;serial.c: 48:         (((*(volatile __near unsigned char*)0xFAB)) |= (1<<(4)));
+[e =| *U -> -> 4011 `i `*VNuc -> << -> 1 `i -> 4 `i `uc ]
+"49
+[; ;serial.c: 49:     }
+}
+[e :U 7 ]
+"51
+[; ;serial.c: 51:     if ((((*(volatile __near unsigned char*)0xF9E)) & (1<<(5))))
+[e $ ! != & -> *U -> -> 3998 `i `*VNuc `i << -> 1 `i -> 5 `i -> 0 `i 8  ]
+"52
+[; ;serial.c: 52:     {
+{
+"53
+[; ;serial.c: 53:         resp = (*(volatile __near unsigned char*)0xFAE);
+[e = _resp -> *U -> -> 4014 `i `*VNuc `uc ]
+"54
+[; ;serial.c: 54:     }
+}
+[e :U 8 ]
+"55
+[; ;serial.c: 55:     return resp;
+[e ) -> _resp `uc ]
+[e $UE 6  ]
+"58
+[; ;serial.c: 58: }
+[e :UE 6 ]
+}
+"62
+[; ;serial.c: 62: void serialInt(int val) {
+[v _serialInt `(v ~T0 @X0 1 ef1`i ]
+{
+[e :U _serialInt ]
+[v _val `i ~T0 @X0 1 r1 ]
+[f ]
+"63
+[; ;serial.c: 63:     if (val < 0) {
+[e $ ! < _val -> 0 `i 10  ]
+{
+"64
+[; ;serial.c: 64:         val = val * (-1);
+[e = _val * _val -U -> 1 `i ]
+"65
+[; ;serial.c: 65:         serialSend('-');
+[e ( _serialSend (1 -> -> 45 `ui `uc ]
+"66
+[; ;serial.c: 66:     }
+}
+[e :U 10 ]
+"67
+[; ;serial.c: 67:     serialSend((val / 10000) % 10 + 48);
+[e ( _serialSend (1 -> + % / _val -> 10000 `i -> 10 `i -> 48 `i `uc ]
+"68
+[; ;serial.c: 68:     serialSend((val / 1000) % 10 + 48);
+[e ( _serialSend (1 -> + % / _val -> 1000 `i -> 10 `i -> 48 `i `uc ]
+"69
+[; ;serial.c: 69:     serialSend((val / 100) % 10 + 48);
+[e ( _serialSend (1 -> + % / _val -> 100 `i -> 10 `i -> 48 `i `uc ]
+"70
+[; ;serial.c: 70:     serialSend((val / 10) % 10 + 48);
+[e ( _serialSend (1 -> + % / _val -> 10 `i -> 10 `i -> 48 `i `uc ]
+"71
+[; ;serial.c: 71:     serialSend((val / 1) % 10 + 48);
+[e ( _serialSend (1 -> + % / _val -> 1 `i -> 10 `i -> 48 `i `uc ]
+"73
+[; ;serial.c: 73: }
+[e :UE 9 ]
+}
+"77
+[; ;serial.c: 77: void serialString(const char *str){
+[v _serialString `(v ~T0 @X0 1 ef1`*Cuc ]
+{
+[e :U _serialString ]
+[v _str `*Cuc ~T0 @X0 1 r1 ]
+[f ]
+"78
+[; ;serial.c: 78:     while (*str) {
+[e $U 12  ]
+[e :U 13 ]
+{
+"79
+[; ;serial.c: 79:         serialSend(*str++);
+[e ( _serialSend (1 -> *U ++ _str * -> -> 1 `i `x -> -> # *U _str `i `x `uc ]
+"80
+[; ;serial.c: 80:     }
+}
+[e :U 12 ]
+"78
+[; ;serial.c: 78:     while (*str) {
+[e $ != -> *U _str `i -> 0 `i 13  ]
+[e :U 14 ]
+"81
+[; ;serial.c: 81: }
+[e :UE 11 ]
+}

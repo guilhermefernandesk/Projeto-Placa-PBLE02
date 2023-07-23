@@ -1,0 +1,122 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"22 ./lcd.h
+[; ;./lcd.h: 22:     void delay_ms(unsigned long ms);
+[v _delay_ms `(v ~T0 @X0 0 ef1`ul ]
+"31 ./config.h
+[p x MCLRE=ON                 ]
+"32
+[p x FOSC=HS                  ]
+"33
+[p x WDT=OFF                  ]
+"34
+[p x LVP=OFF                  ]
+"35
+[p x ICPRT=ON ]
+"36
+[p x CCP2MX  =  OFF ]
+"6 button.c
+[; ;button.c: 6: void butInit(void) {
+[v _butInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _butInit ]
+[f ]
+"8
+[; ;button.c: 8:     (((*(volatile __near unsigned char*)0xF94)) |= (1<<(0)));
+[e =| *U -> -> 3988 `i `*VNuc -> << -> 1 `i -> 0 `i `uc ]
+"9
+[; ;button.c: 9:     (((*(volatile __near unsigned char*)0xF94)) |= (1<<(1)));
+[e =| *U -> -> 3988 `i `*VNuc -> << -> 1 `i -> 1 `i `uc ]
+"10
+[; ;button.c: 10:     (((*(volatile __near unsigned char*)0xF94)) |= (1<<(2)));
+[e =| *U -> -> 3988 `i `*VNuc -> << -> 1 `i -> 2 `i `uc ]
+"11
+[; ;button.c: 11:     (((*(volatile __near unsigned char*)0xF95)) |= (1<<(4)));
+[e =| *U -> -> 3989 `i `*VNuc -> << -> 1 `i -> 4 `i `uc ]
+"12
+[; ;button.c: 12:     (((*(volatile __near unsigned char*)0xF95)) |= (1<<(5)));
+[e =| *U -> -> 3989 `i `*VNuc -> << -> 1 `i -> 5 `i `uc ]
+"13
+[; ;button.c: 13: }
+[e :UE 1 ]
+}
+"15
+[; ;button.c: 15: char butRead(char num) {
+[v _butRead `(uc ~T0 @X0 1 ef1`uc ]
+{
+[e :U _butRead ]
+[v _num `uc ~T0 @X0 1 r1 ]
+[f ]
+"19
+[; ;button.c: 19:     if (num < 3) {
+[e $ ! < -> _num `i -> 3 `i 3  ]
+{
+"20
+[; ;button.c: 20:         if ((((*(volatile __near unsigned char*)0xF82)) & (1<<(num)))) {
+[e $ ! != & -> *U -> -> 3970 `i `*VNuc `i << -> 1 `i -> _num `i -> 0 `i 4  ]
+{
+"21
+[; ;button.c: 21:             delay_ms(75);
+[e ( _delay_ms (1 -> -> -> 75 `i `l `ul ]
+"22
+[; ;button.c: 22:             return 1;
+[e ) -> -> 1 `i `uc ]
+[e $UE 2  ]
+"23
+[; ;button.c: 23:         } else {
+}
+[e $U 5  ]
+[e :U 4 ]
+{
+"24
+[; ;button.c: 24:             delay_ms(75);
+[e ( _delay_ms (1 -> -> -> 75 `i `l `ul ]
+"25
+[; ;button.c: 25:             return 0;
+[e ) -> -> 0 `i `uc ]
+[e $UE 2  ]
+"26
+[; ;button.c: 26:         }
+}
+[e :U 5 ]
+"27
+[; ;button.c: 27:     } else {
+}
+[e $U 6  ]
+[e :U 3 ]
+{
+"28
+[; ;button.c: 28:         if ((((*(volatile __near unsigned char*)0xF83)) & (1<<((num + 1))))) {
+[e $ ! != & -> *U -> -> 3971 `i `*VNuc `i << -> 1 `i + -> _num `i -> 1 `i -> 0 `i 7  ]
+{
+"29
+[; ;button.c: 29:             delay_ms(75);
+[e ( _delay_ms (1 -> -> -> 75 `i `l `ul ]
+"30
+[; ;button.c: 30:             return 1;
+[e ) -> -> 1 `i `uc ]
+[e $UE 2  ]
+"31
+[; ;button.c: 31:         } else {
+}
+[e $U 8  ]
+[e :U 7 ]
+{
+"32
+[; ;button.c: 32:             delay_ms(75);
+[e ( _delay_ms (1 -> -> -> 75 `i `l `ul ]
+"33
+[; ;button.c: 33:             return 0;
+[e ) -> -> 0 `i `uc ]
+[e $UE 2  ]
+"34
+[; ;button.c: 34:         }
+}
+[e :U 8 ]
+"35
+[; ;button.c: 35:     }
+}
+[e :U 6 ]
+"36
+[; ;button.c: 36: }
+[e :UE 2 ]
+}

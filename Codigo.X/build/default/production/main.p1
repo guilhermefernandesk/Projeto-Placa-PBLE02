@@ -1,0 +1,75 @@
+Version 4.0 HI-TECH Software Intermediate Code
+[p mainexit ]
+"27 ./timer.h
+[; ;./timer.h: 27:  void timerInit(void);
+[v _timerInit `(v ~T0 @X0 0 ef ]
+"11 ./var.h
+[; ;./var.h: 11: void varInit(void);
+[v _varInit `(v ~T0 @X0 0 ef ]
+"18 ./event.h
+[; ;./event.h: 18: void eventInit(void);
+[v _eventInit `(v ~T0 @X0 0 ef ]
+"10 ./output.h
+[; ;./output.h: 10: void outputInit(void);
+[v _outputInit `(v ~T0 @X0 0 ef ]
+"25 ./stateMachine.h
+[; ;./stateMachine.h: 25: void smInit(void);
+[v _smInit `(v ~T0 @X0 0 ef ]
+"26 ./timer.h
+[; ;./timer.h: 26:  void timerReset(unsigned int tempo);
+[v _timerReset `(v ~T0 @X0 0 ef1`ui ]
+"15 ./var.h
+[; ;./var.h: 15: int getTime(void);
+[v _getTime `(i ~T0 @X0 0 ef ]
+"26 ./stateMachine.h
+[; ;./stateMachine.h: 26: void smLoop(void);
+[v _smLoop `(v ~T0 @X0 0 ef ]
+"24 ./timer.h
+[; ;./timer.h: 24:  void timerWait(void);
+[v _timerWait `(v ~T0 @X0 0 ef ]
+[v $root$_main `(v ~T0 @X0 0 e ]
+"14 main.c
+[; ;main.c: 14: void main(void){
+[v _main `(v ~T0 @X0 1 ef ]
+{
+[e :U _main ]
+[f ]
+"16
+[; ;main.c: 16:     timerInit();
+[e ( _timerInit ..  ]
+"17
+[; ;main.c: 17:     varInit();
+[e ( _varInit ..  ]
+"18
+[; ;main.c: 18:     eventInit();
+[e ( _eventInit ..  ]
+"19
+[; ;main.c: 19:     outputInit();
+[e ( _outputInit ..  ]
+"20
+[; ;main.c: 20:     smInit();
+[e ( _smInit ..  ]
+"21
+[; ;main.c: 21:     for (;;) {
+{
+[e :U 2 ]
+{
+"22
+[; ;main.c: 22:         timerReset(getTime());
+[e ( _timerReset (1 -> ( _getTime ..  `ui ]
+"23
+[; ;main.c: 23:         smLoop();
+[e ( _smLoop ..  ]
+"24
+[; ;main.c: 24:         timerWait();
+[e ( _timerWait ..  ]
+"25
+[; ;main.c: 25:     }
+}
+[e $U 2  ]
+[e :U 3 ]
+}
+"26
+[; ;main.c: 26: }
+[e :UE 1 ]
+}

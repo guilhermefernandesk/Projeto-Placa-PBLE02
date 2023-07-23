@@ -1,0 +1,78 @@
+Version 4.0 HI-TECH Software Intermediate Code
+"23 timer.c
+[; ;timer.c: 23: char timerEnded(void) {
+[v _timerEnded `(uc ~T0 @X0 1 ef ]
+{
+[e :U _timerEnded ]
+[f ]
+"24
+[; ;timer.c: 24:     return (((*(volatile __near unsigned char*)0xFF2)) & (1<<(2)));
+[e ) -> & -> *U -> -> 4082 `i `*VNuc `i << -> 1 `i -> 2 `i `uc ]
+[e $UE 1  ]
+"25
+[; ;timer.c: 25: }
+[e :UE 1 ]
+}
+"27
+[; ;timer.c: 27: void timerWait(void) {
+[v _timerWait `(v ~T0 @X0 1 ef ]
+{
+[e :U _timerWait ]
+[f ]
+"28
+[; ;timer.c: 28:     while (!(((*(volatile __near unsigned char*)0xFF2)) & (1<<(2))));
+[e $U 3  ]
+[e :U 4 ]
+[e :U 3 ]
+[e $ ! != & -> *U -> -> 4082 `i `*VNuc `i << -> 1 `i -> 2 `i -> 0 `i 4  ]
+[e :U 5 ]
+"29
+[; ;timer.c: 29: }
+[e :UE 2 ]
+}
+"33
+[; ;timer.c: 33: void timerReset(unsigned int tempo) {
+[v _timerReset `(v ~T0 @X0 1 ef1`ui ]
+{
+[e :U _timerReset ]
+[v _tempo `ui ~T0 @X0 1 r1 ]
+[f ]
+"35
+[; ;timer.c: 35:     unsigned ciclos = tempo * 5;
+[v _ciclos `ui ~T0 @X0 1 a ]
+[e = _ciclos * _tempo -> -> 5 `i `ui ]
+"37
+[; ;timer.c: 37:     ciclos = 65535 - ciclos;
+[e = _ciclos -> - -> 65535 `l -> _ciclos `l `ui ]
+"39
+[; ;timer.c: 39:     ciclos -= 14;
+[e =- _ciclos -> -> 14 `i `ui ]
+"40
+[; ;timer.c: 40:     (*(volatile __near unsigned char*)0xFD7) = (ciclos >> 8);
+[e = *U -> -> 4055 `i `*VNuc -> >> _ciclos -> 8 `i `uc ]
+"41
+[; ;timer.c: 41:     (*(volatile __near unsigned char*)0xFD6) = (ciclos & 0x00FF);
+[e = *U -> -> 4054 `i `*VNuc -> & _ciclos -> -> 255 `i `ui `uc ]
+"43
+[; ;timer.c: 43:     (((*(volatile __near unsigned char*)0xFF2)) = ((*(volatile __near unsigned char*)0xFF2)) & (~(1<<(2))));
+[e = *U -> -> 4082 `i `*VNuc -> & -> *U -> -> 4082 `i `*VNuc `i ~ << -> 1 `i -> 2 `i `uc ]
+"44
+[; ;timer.c: 44: }
+[e :UE 6 ]
+}
+"46
+[; ;timer.c: 46: void timerInit(void) {
+[v _timerInit `(v ~T0 @X0 1 ef ]
+{
+[e :U _timerInit ]
+[f ]
+"47
+[; ;timer.c: 47:     (*(volatile __near unsigned char*)0xFD5) = 0b00001000;
+[e = *U -> -> 4053 `i `*VNuc -> -> 8 `i `uc ]
+"48
+[; ;timer.c: 48:     (((*(volatile __near unsigned char*)0xFD5)) |= (1<<(7)));
+[e =| *U -> -> 4053 `i `*VNuc -> << -> 1 `i -> 7 `i `uc ]
+"49
+[; ;timer.c: 49: }
+[e :UE 7 ]
+}
