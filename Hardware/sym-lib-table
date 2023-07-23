@@ -1,0 +1,7 @@
+(sym_lib_table
+  (lib (name "PBLE Library")(type "Legacy")(uri "${KIPRJMOD}/PBLE Library.lib")(options "")(descr ""))
+  (lib (name "LCD2X16")(type "Legacy")(uri "C:/Users/derso/OneDrive - Universidade Federal de Itajubá/Faculdade/5º Semestre/PBLE01 - CO-DESIGN DE PRODUTOS ELETRÔNICOS/Projeto/LCD2X16/LCD2X16.lib")(options "")(descr ""))
+  (lib (name "897-43-004-90-000000")(type "Legacy")(uri "F:/OneDrive/OneDrive - Universidade Federal de Itajubá/Projeto/897-43-004-90-000000/897-43-004-90-000000.lib")(options "")(descr ""))
+  (lib (name "2021-05-25_22-05-13")(type "Legacy")(uri "F:/OneDrive/OneDrive - Universidade Federal de Itajubá/Projeto/ul_8974300490000000/KiCAD/2021-05-25_22-05-13/2021-05-25_22-05-13.lib")(options "")(descr ""))
+  (lib (name "PBLE-Circuit-rescue")(type "Legacy")(uri "${KIPRJMOD}/PBLE Circuit-rescue.lib")(options "")(descr ""))
+)
