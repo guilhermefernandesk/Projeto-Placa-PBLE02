@@ -11,8 +11,9 @@ O projeto consiste na montagem de uma placa realizada por alunos da unifei. Bem 
 </ul>
 
 ## Imagens:
-  <img src="https://i.ibb.co/28LQxx2/PQDB.jpg" alt="PQDB" border="0">
-  <img src="https://i.ibb.co/0mc0CY1/PQDB2.jpg" alt="PQDB2" border="0">
+  ![PQDB](https://github.com/user-attachments/assets/9cd8287a-af94-4da0-944a-6daa2592f786)
+  ![PQDB2](https://github.com/user-attachments/assets/cdba569f-0a34-43a3-8c07-5c114e649a82)
+
   
 ## Vídeo apresentação do projeto:
 https://drive.google.com/file/d/1amIkBEUgF5RGjeDBrGX1CGrTWx1kXM-I/view?usp=sharing
